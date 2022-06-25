@@ -1,3 +1,15 @@
+# ABOUT THIS CLIENT
+
+A client was make from superblaubeere27 client base with some basic modules
+
+
+
+
+
+
+
+
+#Client Base Credit :)
 # ClientBase [![Build Status](https://travis-ci.org/superblaubeere27/ClientBase.svg?branch=master)](https://travis-ci.org/superblaubeere27/ClientBase)
 ## Licensing
 You can use the Base under MIT License or you can **donate to me** (doesn't have to be a subscription)
