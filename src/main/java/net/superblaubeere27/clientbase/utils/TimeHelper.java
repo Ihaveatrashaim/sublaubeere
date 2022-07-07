@@ -25,6 +25,10 @@ public class TimeHelper {
         return getCurrentMS() - lastMS >= milliseconds;
     }
     
+    public boolean delay(double milliseconds) {
+        return getCurrentMS() - lastMS >= milliseconds;
+    }
+    
     public boolean hasReached(double milliseconds) {
         return getCurrentMS() - lastMS >= milliseconds;
     }

@@ -22,7 +22,7 @@ import java.util.List;
 public class ScriptCommand extends Command {
 
     public ScriptCommand() {
-        super("script", "js");
+        super("script", "Run/Create a script" ,"js");
     }
 
     @Override

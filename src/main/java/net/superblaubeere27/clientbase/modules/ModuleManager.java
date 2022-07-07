@@ -12,17 +12,24 @@ package net.superblaubeere27.clientbase.modules;
 
 import com.darkmagician6.eventapi.EventManager;
 import com.darkmagician6.eventapi.EventTarget;
+
+import net.minecraft.client.Minecraft;
 import net.superblaubeere27.clientbase.ClientBase;
 import net.superblaubeere27.clientbase.events.KeyEvent;
+import net.superblaubeere27.clientbase.gui.clickgui.ClickGUI;
+import net.superblaubeere27.clientbase.gui.clickgui2.VapeClickGui;
 import net.superblaubeere27.clientbase.modules.modules.combat.*;
-import net.superblaubeere27.clientbase.modules.modules.dev.*;
 import net.superblaubeere27.clientbase.modules.modules.exploit.*;
 import net.superblaubeere27.clientbase.modules.modules.movement.*;
 import net.superblaubeere27.clientbase.modules.modules.render.*;
 import net.superblaubeere27.clientbase.modules.modules.render.tabgui.TabGui;
 import net.superblaubeere27.clientbase.modules.modules.world.*;
 import net.superblaubeere27.clientbase.scripting.ScriptModule;
+import net.superblaubeere27.clientbase.valuesystem.ModeValue;
+import net.superblaubeere27.clientbase.valuesystem.Value;
+
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,45 +45,33 @@ public class ModuleManager {
 
 
     public void addModules() {
-        addModule(new DevToggle());
-        addModule(new DevRank());
         addModule(new SetbackDetector());
+        addModule(new AirStuck());
+        addModule(new Teleport());
         addModule(new NoFall());
+        addModule(new ClickGui());
         addModule(new Fly());
+        addModule(new ESP());
+        addModule(new AntiVoid());
         addModule(new KillAura());
+        addModule(new HighJump());
+        addModule(new Jesus());
         addModule(new Velocity());
+        addModule(new ChestStealer());
         addModule(new Speed());
         addModule(new FakeLag());
         addModule(new ConsoleSpammer());
         addModule(new Step());
         addModule(new Freecam());
+        addModule(new NoSlow());
+        addModule(new FastPlace());
     	addModule(new TabGui());
         addModule(new AirJump());
         addModule(new InventoryHelper());
         addModule(new Sneak());
         addModule(new ScaffoldWalk());
-        addModule(new ClickGUIModule());
+        addModule(new NoRotateSet());
         addModule(new HUD());
-    }
-    public void removeModules() {
-    	removeModule(new DevToggle());
-    	removeModule(new DevRank());
-    	removeModule(new SetbackDetector());
-    	removeModule(new NoFall());
-    	removeModule(new Fly());
-    	removeModule(new KillAura());
-    	removeModule(new Velocity());
-    	removeModule(new Speed());
-    	removeModule(new FakeLag());
-    	removeModule(new ConsoleSpammer());
-    	removeModule(new Step());
-    	removeModule(new Freecam());
-    	removeModule(new AirJump());
-    	removeModule(new InventoryHelper());
-    	removeModule(new Sneak());
-    	removeModule(new ScaffoldWalk());
-    	removeModule(new ClickGUIModule());
-    	removeModule(new HUD());
     }
 
     private void addModule(@NotNull Module module) {
@@ -116,10 +111,26 @@ public class ModuleManager {
     public Module getModule(@NotNull String name, boolean caseSensitive) {
         return modules.stream().filter(mod -> !caseSensitive && name.equalsIgnoreCase(mod.getName()) || name.equals(mod.getName())).findFirst().orElse(null);
     }
+    
 
     @EventTarget
     private void onKey(@NotNull KeyEvent event) {
         for (Module module : modules) if (module.getKeybind() == event.getKey()) module.setState(!module.getState());
+        
+        if(event.getKey() == ClientBase.INSTANCE.moduleManager.getModule("ClickGui", false).getKeybind()) {
+        	for(Value v :ClientBase.INSTANCE.valueManager.getAllValuesFrom("ClickGui")) {
+        		if(v instanceof ModeValue) {
+            		if(((ModeValue)v).getObject() == 1) {
+                        Minecraft.getMinecraft().displayGuiScreen(new VapeClickGui());
+            		}
+            		
+            		if(((ModeValue)v).getObject() == 0) {
+                        Minecraft.getMinecraft().displayGuiScreen(new ClickGUI());
+            		}
+        		}
+        	}
+        	ClientBase.INSTANCE.moduleManager.getModule("ClickGui", false).setState(false);
+        }
     }
 
     public void addScriptModule(ScriptModule module) {
@@ -129,6 +140,5 @@ public class ModuleManager {
 
 	public void reloadModules() {
 		addModules();
-		removeModules();
 	}
 }

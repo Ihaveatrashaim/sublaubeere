@@ -32,7 +32,7 @@ public class BindCommand extends Command {
     private Module currentModule = null;
 
     public BindCommand() {
-        super("bind");
+        super("bind", "Bind a module to key","bind");
 
         EventManager.register(this);
     }

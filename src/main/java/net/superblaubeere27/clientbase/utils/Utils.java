@@ -59,6 +59,18 @@ public class Utils {
         return new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(),
                 auth.getAuthenticatedToken(), "mojang");
     }
+    
+    public static Session createSessionCracked(String username, @NotNull Proxy proxy) throws Exception {
+        YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(proxy, "");
+        YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) service
+                .createUserAuthentication(Agent.MINECRAFT);
+
+        auth.setUsername(username);
+
+        auth.logIn();
+        return new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(),
+                auth.getAuthenticatedToken(), "mojang");
+    }
 
     public static float[] getNeededRotations(final Vec3 vec) {
         final Vec3 eyesPos = new Vec3(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY + Minecraft.getMinecraft().thePlayer.getEyeHeight(), Minecraft.getMinecraft().thePlayer.posZ);

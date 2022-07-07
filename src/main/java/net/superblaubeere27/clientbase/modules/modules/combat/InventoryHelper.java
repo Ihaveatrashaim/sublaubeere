@@ -28,7 +28,7 @@ import net.superblaubeere27.clientbase.utils.TimeHelper;
 public class InventoryHelper extends Module {
 
 	public InventoryHelper() {
-		super("InventoryHelper", "An AI will help with your messy inv", ModuleCategory.COMBAT);
+		super("InvHelper", "An AI will help with your messy inv", ModuleCategory.COMBAT);
 	}
 
 	@EventTarget

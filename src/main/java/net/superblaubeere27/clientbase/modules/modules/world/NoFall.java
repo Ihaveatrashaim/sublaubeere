@@ -35,7 +35,7 @@ import java.util.List;
 public class NoFall extends Module {
 
     public NoFall() {
-        super("NoFall", "Remove Fall Damage", ModuleCategory.WORLD);
+        super("NoFall", "Remove Fall Damage", ModuleCategory.PLAYER);
     }
 
     private ModeValue mode = new ModeValue("NoFall Modes", "Packet", "Packet", "AAC", "Matrix");
@@ -54,15 +54,19 @@ public class NoFall extends Module {
     @EventTarget
     private void onMove(MotionUpdateEvent event) {
     	if(!getState()) return;
-    	
-    	this.setName("NoFall" + "§7 " + getMode());
-    	
+    	    	
     	if(getMode().equalsIgnoreCase("Matrix")) {
     		Fly.setTimerSpeed(1F);
 
     		boolean matrixIsFall = true;
 
+    		
+    		
     		if (mc.thePlayer.fallDistance-mc.thePlayer.motionY>3) {
+    			if(mc.gameSettings.keyBindJump.isKeyDown()) {
+        			mc.thePlayer.onGround = false;
+    			}
+    			
     			mc.thePlayer.onGround = true;
     			mc.thePlayer.fallDistance = 0.0F;
     			PacketSend = true;
@@ -71,8 +75,23 @@ public class NoFall extends Module {
     	}
     	
     	if(getMode().equalsIgnoreCase("AAC")) {
-    		if(!mc.thePlayer.onGround) {
-        		mc.thePlayer.motionY = -5;
+    		Fly.setTimerSpeed(1F);
+    		if(mc.thePlayer.fallDistance >3) {
+    			mc.thePlayer.fallDistance = 5.0F;
+    		}
+    		
+    		if (mc.thePlayer.fallDistance-mc.thePlayer.motionY>3) {
+    			if(mc.thePlayer.fallDistance >= 10) {
+    				mc.thePlayer.onGround = true;
+        			mc.thePlayer.fallDistance = 2.9F;
+        			PacketSend = true;
+        			Fly.setTimerSpeed(0.42f);
+    			}else {
+    				mc.thePlayer.onGround = true;
+        			mc.thePlayer.fallDistance = 0.0F;
+        			PacketSend = true;
+        			Fly.setTimerSpeed(0.73f);
+    			}
     		}
     	}
     	
@@ -90,16 +109,14 @@ public class NoFall extends Module {
 
     @EventTarget
     private void onPacket(PacketEvent event) {
-        if(getMode().equalsIgnoreCase("Matrix")) {
-        	Packet packet = event.getPacket();
-        	if (event.getPacket() instanceof C03PacketPlayer) {
-    			if (PacketSend) {
-    				PacketSend = false;
-    				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(((C03PacketPlayer) packet).getPositionX(), ((C03PacketPlayer) packet).getPositionY(), ((C03PacketPlayer) packet).getPositionZ(), true));
-    				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(((C03PacketPlayer) packet).getPositionX(), ((C03PacketPlayer) packet).getPositionY(), ((C03PacketPlayer) packet).getPositionZ(), false));
-    				event.setCancelled(true);
-    			}
-    		}
-        }
+    	Packet packet = event.getPacket();
+    	if (event.getPacket() instanceof C03PacketPlayer) {
+			if (PacketSend) {
+				PacketSend = false;
+				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(((C03PacketPlayer) packet).getPositionX(), ((C03PacketPlayer) packet).getPositionY(), ((C03PacketPlayer) packet).getPositionZ(), true));
+				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(((C03PacketPlayer) packet).getPositionX(), ((C03PacketPlayer) packet).getPositionY(), ((C03PacketPlayer) packet).getPositionZ(), false));
+				event.setCancelled(true);
+			}
+		}
     }
 }

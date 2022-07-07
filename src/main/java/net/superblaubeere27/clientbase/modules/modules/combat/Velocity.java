@@ -14,16 +14,48 @@ import com.darkmagician6.eventapi.EventTarget;
 import net.superblaubeere27.clientbase.events.MotionUpdateEvent;
 import net.superblaubeere27.clientbase.modules.Module;
 import net.superblaubeere27.clientbase.modules.ModuleCategory;
+import net.superblaubeere27.clientbase.valuesystem.ModeValue;
 
 public class Velocity extends Module {
     public Velocity() {
         super("Velocity", "Prevent kb", ModuleCategory.COMBAT);
     }
 
+    private ModeValue modes = new ModeValue("Modes", "Legit", "Legit", "AACZero");
+    
+    public String getMode(){
+        int Mode = modes.getObject();
+        if(Mode == 0) return "Legit";
+        if (Mode == 1) return "AACZero";
+
+        else return null;
+    }
+    
     @EventTarget
     public void onMotionUpdate(MotionUpdateEvent event){
-        if(mc.thePlayer.hurtTime > 5){
-            mc.thePlayer.onGround = true;
+    	this.setDisplayName("Velocity" + "§7 " + getMode());
+    	
+    	double posX = 0;
+    	double posZ =0;
+    	if(!(mc.thePlayer.hurtTime > 0)) {
+    		posX = mc.thePlayer.posX;
+        	posZ =mc.thePlayer.posZ;
+    	}
+    	
+    	if(getMode().equalsIgnoreCase("Legit")) {
+    		if(mc.thePlayer.hurtTime > 5){
+                mc.thePlayer.onGround = true;
+            }
+    	}
+        if(getMode().equalsIgnoreCase("AACZero")) {
+        	if(mc.thePlayer.hurtTime > 0) {
+        		if (mc.thePlayer.onGround || mc.thePlayer.fallDistance > 2F)
+                    return;
+
+                mc.thePlayer.motionY -= 3.0F;
+                mc.thePlayer.isAirBorne = true;
+                mc.thePlayer.onGround = true;
+            }
         }
     }
 }

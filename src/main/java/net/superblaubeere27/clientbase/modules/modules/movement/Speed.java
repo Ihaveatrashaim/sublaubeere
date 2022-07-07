@@ -13,10 +13,13 @@ package net.superblaubeere27.clientbase.modules.modules.movement;
 import com.darkmagician6.eventapi.EventTarget;
 import com.darkmagician6.eventapi.types.EventType;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.superblaubeere27.clientbase.events.MotionUpdateEvent;
@@ -33,13 +36,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Speed extends Module {
-	private ModeValue mode = new ModeValue("Speed Modes", "Bhop", "BHop", "AAC", "NCP");
+	private ModeValue mode = new ModeValue("Speed Modes", "Bhop", "BHop", "AAC", "NCP", "Hypixel", "AAC4");
     
     public String getMode(){
         int Mode = mode.getObject();
         if(Mode == 0) return "BHop";
         if (Mode == 1) return "AAC";
         if (Mode == 2) return "NCP";
+        if(Mode == 3) return "Hypixel";
+        if(Mode == 4) return "AAC4";
+
 
         else return null;
     }
@@ -50,10 +56,14 @@ public class Speed extends Module {
 
     @Override
     public void onDisable() {
+    	if(mc.thePlayer == null) return;
+    	
     	Fly.setTimerSpeed(1F);
+    	mc.thePlayer.setSilent(false);
+    	this.setJump(false);
     }
     
-    private void setJump(boolean b) {
+    public static void setJump(boolean b) {
         KeyBinding jumpBinding = mc.gameSettings.keyBindJump;
         try {
             Field field = jumpBinding.getClass().getDeclaredField("pressed");
@@ -67,8 +77,8 @@ public class Speed extends Module {
     @EventTarget
     private void onMove(MotionUpdateEvent event) {
     	if(!getState())  return;
-    	
-    	this.setName("Speed" + "§7 " + getMode());
+    	    
+    	this.setDisplayName("Speed" + "§7 " + getMode());
     	
     	if(getMode().equalsIgnoreCase("Bhop")) {
     		if(!Fly.isMoving()) {
@@ -94,28 +104,127 @@ public class Speed extends Module {
     	
     	if(getMode().equalsIgnoreCase("AAC")) {
     		if(Fly.isMoving()) {
-    			Fly.setTimerSpeed(1.5F);
-    			mc.getNetHandler().addToSendQueue(new
-    		            C03PacketPlayer.C04PacketPlayerPosition(
-    		                mc.thePlayer.posX,
-    		                mc.thePlayer.posY,
-    		                mc.thePlayer.posZ,
-    		                true
-    		            )
-    		        );
+    			//Fake regen to bypass timer check
+    			mc.thePlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 2, 5));
+    			Fly.setTimerSpeed(1.18F);
+    		}else {
+    			Fly.setTimerSpeed(1F);
     		}
     	}
     	
     	if(getMode().equalsIgnoreCase("NCP")) {
     		EntityPlayer thePlayer = mc.thePlayer;
-
-    		if (mc.thePlayer.isOnLadder() || mc.thePlayer.isInWater() || mc.thePlayer.isInLava() || !(Fly.isMoving()) || mc.thePlayer.isInWater()) return;
-    		        if (mc.thePlayer.onGround) {;
-    		        	setJump(true);
+			mc.thePlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 2, 5));
+    		if(mc.gameSettings.keyBindForward.isKeyDown()) {
+    			Fly.setTimerSpeed(1.21F);    			
+    		}else {
+    			mc.thePlayer.motionY = -0.5;
     		}
-    		Fly.strafe(0.4F);
     	}
-        
+    	
+    	if(getMode().equalsIgnoreCase("Hypixel")) {
+    		if (mc.theWorld != null && mc.thePlayer != null) {
+    			this.setJump(false);
+    			if (mc.gameSettings.keyBindForward.isKeyDown() && !mc.thePlayer.isCollidedHorizontally) {
+    				if (mc.thePlayer.onGround) {
+    					mc.thePlayer.jump();
+    					Fly.setTimerSpeed(1.05F);
+    				} else {
+    					mc.thePlayer.jumpMovementFactor = 0.0265F;
+    					Fly.setTimerSpeed(1.4F);
+    				}
+    			}
+    		}
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	if(getMode().equalsIgnoreCase("AAC4")) {
+    		//Fake
+			mc.thePlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 2, 5));
+			mc.thePlayer.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 2, 5));
+
+    		if(this.isMoving()) {
+    	    	mc.thePlayer.setSilent(false);
+    			if(mc.thePlayer.onGround) {
+        			this.setTimerSpeed(2.12F);
+    				setJump(true);
+    			}else {
+    				
+
+    			}
+    			this.setTimerSpeed(1F);
+
+    		}else {
+				setJump(false);
+    		}
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+       
+    }
+    
+    public static void setTimerSpeed(float timerSpeed){
+        try{
+            Class<?> mc = Minecraft.class;
+            Field timerField = mc.getDeclaredField("timer");
+            timerField.setAccessible(true);
+
+            try{
+                Object timer = timerField.get(Minecraft.getMinecraft());
+                Class<?> timerClass = timer.getClass();
+                Field timerSpeedField = timerClass.getDeclaredField("timerSpeed");
+                timerSpeedField.setAccessible(true);
+                timerSpeedField.setFloat(timer, timerSpeed);
+            }catch (IllegalAccessException e){
+                e.printStackTrace();
+            }
+
+        }catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static boolean isMoving() {
+        if (mc.thePlayer != null && (mc.thePlayer.movementInput.moveForward != 0f || mc.thePlayer.movementInput.moveStrafe != 0f)) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @EventTarget

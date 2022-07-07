@@ -28,9 +28,9 @@ public class ClientBase {
     public static final String CLIENT_NAME = "Sublaubeere";
     @NotNull
     public static final String CLIENT_AUTHOR = "superblaubeere27, Ihaveatrashaim";
-    public static final double CLIENT_VERSION_NUMBER = 1.0;
+    public static final double CLIENT_VERSION_NUMBER = 2.0;
     @NotNull
-    public static final String CLIENT_VERSION = "b" +CLIENT_VERSION_NUMBER;
+    public static final String CLIENT_VERSION = "b" + CLIENT_VERSION_NUMBER + "";
     @NotNull
     public static final String CLIENT_INITIALS;
     public static ClientBase INSTANCE;
@@ -75,6 +75,8 @@ public class ClientBase {
         moduleManager.addModules();
 
         fileManager.load();
+        
+        moduleManager.getModule("NoRotateSet", false).setState(false);
     }
 
     public void stopClient() {

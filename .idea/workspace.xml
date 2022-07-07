@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58e25349-9810-4b1a-b133-aae2581ed9ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/ClientBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/ClientBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/gui/tabgui/TabGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/gui/tabgui/TabGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/injection/mixins/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/injection/mixins/MixinMinecraft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/ModuleCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/ModuleCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/ModuleManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/modules/fun/DemoModeModule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/modules/render/HUD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/modules/modules/render/HUD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/superblaubeere27/clientbase/utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sublaubeere/ClientBase_Client.launch" beforeDir="false" afterPath="$PROJECT_DIR$/sublaubeere/ClientBase_Client.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sublaubeere/ClientBase_Server.launch" beforeDir="false" afterPath="$PROJECT_DIR$/sublaubeere/ClientBase_Server.launch" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,12 +19,13 @@
     </projectState>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/sublaubeere" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2B3GEvZCv9w8gIfK5MjaVnAb5Pr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -40,7 +33,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/Melon-Client-beta-v4"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

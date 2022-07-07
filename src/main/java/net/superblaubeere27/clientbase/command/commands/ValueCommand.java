@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ValueCommand extends Command {
     public ValueCommand() {
-        super("value", "val", "v", "set");
+        super("value", "Set value", "v", "set");
     }
 
     @Override

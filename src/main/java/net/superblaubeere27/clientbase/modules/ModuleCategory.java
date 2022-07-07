@@ -11,7 +11,7 @@
 package net.superblaubeere27.clientbase.modules;
 
 public enum ModuleCategory {
-	COMBAT("Combat"), PLAYER("Player") ,RENDER("RenderUI"), MOVEMENT("Movement"), WORLD("World"), EXPLOIT("Exploit") ,DEV("Dev");
+	COMBAT("Combat"), PLAYER("Player") ,RENDER("RenderUI"), MOVEMENT("Movement"), WORLD("World"), EXPLOIT("Exploit");
 
     private String name;
 

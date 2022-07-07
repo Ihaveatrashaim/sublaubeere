@@ -24,6 +24,11 @@ public class MixinEntity {
     public double posZ;
 
     @Shadow
+    protected boolean inPortal;
+    
+
+    
+    @Shadow
     public float rotationYaw;
     @Shadow
     public float rotationPitch;

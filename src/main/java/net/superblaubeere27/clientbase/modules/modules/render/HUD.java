@@ -112,8 +112,7 @@ public class HUD extends Module {
 
         ClientBase.INSTANCE.moduleManager.getModules().stream().filter(mod -> mod.getState() && !mod.isHidden()).forEach(mod -> {
         	if(mod.getName().equalsIgnoreCase("TabGui")) return;
-        	if(mod.getCategory() == ModuleCategory.DEV) return;
-            fontRenderer.drawString(mod.getName(), res.getScaledWidth() - fontRenderer.getStringWidth(mod.getName()) - 3, offset.get(), new Color(66, 135, 245).getRGB(), true);
+            fontRenderer.drawString(mod.getDisplayName(), res.getScaledWidth() - fontRenderer.getStringWidth(mod.getDisplayName()) - 3, offset.get(), new Color(66, 135, 245).getRGB(), true);
 
             offset.addAndGet(fontRenderer.FONT_HEIGHT + 2);
             index.getAndIncrement();

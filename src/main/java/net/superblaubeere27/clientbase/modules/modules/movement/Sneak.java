@@ -35,7 +35,7 @@ import java.util.List;
 public class Sneak extends Module {
 	private ModeValue mode = new ModeValue("Speed Modes", "Vanilla", "Vanilla", "Switch", "Legit");
     
-	private void setSneaking(boolean b) {
+	public static void setSneaking(boolean b) {
         KeyBinding sneakBinding = mc.gameSettings.keyBindSneak;
         try {
             Field field = sneakBinding.getClass().getDeclaredField("pressed");
@@ -62,6 +62,8 @@ public class Sneak extends Module {
     @Override
     public void onDisable() {
     	if(mc.thePlayer == null) return;
+    	
+    	
     	
     	Fly.setTimerSpeed(1F);
         mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
@@ -90,8 +92,7 @@ public class Sneak extends Module {
     private void onMove(MotionUpdateEvent event) {
     	if(!getState()) return;
     	
-    	
-    	this.setName("Sneak" + "§7 " + getMode());
+    	this.setDisplayName("Sneak" + "§7 " + getMode());
     	
     	if(getMode().equalsIgnoreCase("Vanilla")) {
         	setSneaking(false);

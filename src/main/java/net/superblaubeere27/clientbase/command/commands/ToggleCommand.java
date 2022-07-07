@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class ToggleCommand extends Command {
 
     public ToggleCommand() {
-        super("toggle", "t");
+        super("toggle", "toggle a command" ,"toggle");
     }
 
     @Override

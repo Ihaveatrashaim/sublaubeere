@@ -26,7 +26,7 @@ import java.util.List;
 public class LoginCommand extends Command {
 
     public LoginCommand() {
-        super("login", "alt");
+        super("login", "login", "Login into a account");
     }
 
     @Override
@@ -46,6 +46,7 @@ public class LoginCommand extends Command {
             if (split.length != 2) {
                 throw new CommandException("Usage: ." + alias + " <username:password> or <username> <password>");
             }
+            
 
             username = split[0];
             password = split[1];

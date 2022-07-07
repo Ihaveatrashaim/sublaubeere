@@ -5,6 +5,8 @@ import com.darkmagician6.eventapi.types.EventType;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.player.EntityPlayer;
 import net.superblaubeere27.clientbase.events.MotionUpdateEvent;
 import net.superblaubeere27.clientbase.modules.Module;
 import net.superblaubeere27.clientbase.modules.ModuleCategory;
@@ -28,7 +30,8 @@ public class KillAura extends Module {
     private NumberValue<Float> rangeValue = new NumberValue<>("Range", 4.6F, 1f, 6f);
 
     private BooleanValue Rotation = new BooleanValue("Rotation" ,false);
-
+    private BooleanValue Mobs = new BooleanValue("Attack Mobs" ,false);
+    
     private NumberValue<Integer> targetChangeDelay = new NumberValue<>("TargetChangeDelay", 100, 0, 1000);
 
     private TimeHelper cpsTimer = new TimeHelper();
@@ -52,7 +55,7 @@ public class KillAura extends Module {
             if (theObject instanceof EntityLivingBase) {
                 EntityLivingBase target = (EntityLivingBase) theObject;
 
-                if (target instanceof EntityPlayerSP) continue;
+               if(Mobs.getObject() && !(target instanceof EntityAnimal)) return;
 
                 if (mc.thePlayer.getDistanceToEntity(target) <= rangeValue.getObject()) {
                     if (isValid(target) && mc.inGameHasFocus && mc.thePlayer.canEntityBeSeen(target)) {
@@ -81,6 +84,6 @@ public class KillAura extends Module {
     }
 
     private boolean isValid(Entity entity) {
-        return entity instanceof EntityLivingBase && entity != mc.thePlayer && ((EntityLivingBase) entity).getHealth() > 0F && entity.getDistanceToEntity(mc.thePlayer) <= rangeValue.getObject();
+        return entity instanceof EntityPlayer && entity != mc.thePlayer && ((EntityLivingBase) entity).getHealth() > 0F && entity.getDistanceToEntity(mc.thePlayer) <= rangeValue.getObject();
     }
 }

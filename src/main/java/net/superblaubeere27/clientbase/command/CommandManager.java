@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class CommandManager {
     @NotNull
-    private List<Command> commands = new ArrayList<>();
+    private static List<Command> commands = new ArrayList<>();
 
     public void addCommands() {
         addCommand(new ToggleCommand());
@@ -29,6 +29,8 @@ public class CommandManager {
         addCommand(new ValueCommand());
         addCommand(new LoginCommand());
         addCommand(new RegisterModule());
+        addCommand(new ClickGuiCommand());
+        addCommand(new HelpCommand());
         addCommand(new SessionCommand());
         addCommand(new ConnectCommand());
         addCommand(new ScriptCommand());
@@ -37,6 +39,11 @@ public class CommandManager {
     private void addCommand(Command cmd) {
         commands.add(cmd);
     }
+    
+    public static List<Command> getCommands() {
+    	return commands;
+    }
+   
 
     public boolean executeCommand(@NotNull String string) {
         String raw = string.substring(1);

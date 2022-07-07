@@ -11,9 +11,15 @@
 package net.superblaubeere27.clientbase.modules;
 
 import net.minecraft.client.Minecraft;
+import net.superblaubeere27.clientbase.ClientBase;
 import net.superblaubeere27.clientbase.notifications.Notification;
 import net.superblaubeere27.clientbase.notifications.NotificationManager;
 import net.superblaubeere27.clientbase.notifications.NotificationType;
+import net.superblaubeere27.clientbase.valuesystem.Value;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 
 import com.darkmagician6.eventapi.EventManager;
@@ -21,12 +27,16 @@ import com.darkmagician6.eventapi.EventManager;
 public abstract class Module {
     protected static final Minecraft mc = Minecraft.getMinecraft();
     private String name;
+    private String DisplayName;
     private String description;
     private ModuleCategory category;
     private boolean canBeEnabled;
     private boolean hidden;
     private int keybind;
     private boolean state;
+	public int optionAnim;
+	public int optionAnimNow;
+	private List<Value> values;
 
     protected Module(String name, String description, ModuleCategory moduleCategory) {
         this(name, description, moduleCategory, true, false, Keyboard.KEY_NONE);
@@ -34,6 +44,7 @@ public abstract class Module {
 
     protected Module(String name, String description, ModuleCategory category, boolean canBeEnabled, boolean hidden, int keybind) {
         this.name = name;
+        this.DisplayName = name;
         this.description = description;
         this.category = category;
         this.canBeEnabled = canBeEnabled;
@@ -41,9 +52,21 @@ public abstract class Module {
         this.keybind = keybind;
     }
 
-    public String getName() {
+    public List<Value> values() {
+    	return ClientBase.INSTANCE.valueManager.getAllValuesFrom(this.getName());
+    }
+    
+     protected Module(String name, String des, ModuleCategory c, int keybind) {
+         this(name, des, c, true, false, keybind);
+	}
+
+	public String getName() {
         return name;
     }
+	
+	public void setDisplayName(String NewName) {
+		this.DisplayName = NewName;
+	}
 
     public String getDescription() {
         return description;
@@ -52,6 +75,8 @@ public abstract class Module {
     public ModuleCategory getCategory() {
         return category;
     }
+    
+   
 
     public boolean isCanBeEnabled() {
         return canBeEnabled;
@@ -102,4 +127,8 @@ public abstract class Module {
 
     protected void onDisable() {
     }
+
+	public String getDisplayName() {
+		return DisplayName;
+	}
 }

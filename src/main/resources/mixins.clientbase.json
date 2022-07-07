@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinEntity",
+    "MixinEntityPlayer",
     "MixinEntityPlayerSP",
     "MixinGuiChat",
     "MixinGuiIngame",
@@ -12,6 +13,10 @@
     "MixinGuiSpectator",
     "MixinMinecraft",
     "MixinNetworkManager",
-    "MixinRenderer"
+    "MixinRenderer",
+    "MixinGlobal",
+    "MixinItemRender",
+    "MixinBlock"
+    
   ]
 }

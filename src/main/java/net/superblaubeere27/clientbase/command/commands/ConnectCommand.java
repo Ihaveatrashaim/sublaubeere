@@ -24,7 +24,7 @@ import java.util.List;
 public class ConnectCommand extends Command {
 
     public ConnectCommand() {
-        super("connect", "join", "goto");
+        super("connect", "Join a server" ,"join");
     }
 
     @Override

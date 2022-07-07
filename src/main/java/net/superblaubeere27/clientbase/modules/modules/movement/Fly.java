@@ -14,11 +14,14 @@ import com.darkmagician6.eventapi.EventTarget;
 import com.darkmagician6.eventapi.types.EventType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
+import net.superblaubeere27.clientbase.events.BBEvent;
 import net.superblaubeere27.clientbase.events.MotionUpdateEvent;
 import net.superblaubeere27.clientbase.events.PacketEvent;
 import net.superblaubeere27.clientbase.modules.Module;
@@ -108,8 +111,8 @@ public class Fly extends Module {
 
         int Mode = modes.getObject();
 
-        this.setName("Fly " + "§7" + getMode());
-
+    	this.setDisplayName("Fly" + "§7 " + getMode());
+        
         if(Mode == 1){
             mc.thePlayer.capabilities.isFlying = false;
             mc.thePlayer.motionY = 0.0;
@@ -122,20 +125,6 @@ public class Fly extends Module {
             EntityPlayer thePlayer = mc.thePlayer;
             thePlayer.motionX = -sin(yaw) * speed.getObject();
             thePlayer.motionZ = cos(yaw) * speed.getObject();
-        }
-
-        if(Mode == 0){
-            double ydiff;
-            mc.thePlayer.cameraYaw *= 0.2;
-            mc.thePlayer.motionY = -0.0;
-            if(!mc.thePlayer.onGround){
-                mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true));
-                ydiff = mc.thePlayer.posY + 1.0e-10d;
-                if(mc.thePlayer.fallDistance > 0.000001){
-                    mc.thePlayer.onGround = true;
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, ydiff, mc.thePlayer.posZ);
-                }
-            }
         }
 
         if(Mode == 2){
@@ -177,6 +166,7 @@ public class Fly extends Module {
 	@EventTarget
     private void onPacket(PacketEvent event) {
         Packet packet = event.getPacket();
+        
         if(getMode().equalsIgnoreCase("Matrix")) {
         	if (packet instanceof S12PacketEntityVelocity) {
                 S12PacketEntityVelocity entityPacket = (S12PacketEntityVelocity) event.getPacket();
@@ -189,6 +179,24 @@ public class Fly extends Module {
         }
         
     }
+	
+	@EventTarget
+	private void onBB(BBEvent event) {
+    	if(!getState()) return;
+		double Flyspeed = speed.getObject();
+		if(getMode().equalsIgnoreCase("Hypixel")) {
+			if (event.block == Blocks.air && event.y < mc.thePlayer.posY
+	        ) event.boundingBox = AxisAlignedBB.fromBounds(
+	            event.x,
+	            event.y,
+	            event.z,
+	            event.x + 1.0,
+	            mc.thePlayer.posY,
+	            event.z + 1.0
+	        );
+			setTimerSpeed(1F);
+		}
+	}
 
     public static void strafe(float speed) {
         if (!isMoving()) return;

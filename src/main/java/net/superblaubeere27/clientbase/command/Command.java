@@ -19,12 +19,14 @@ import java.util.List;
 public abstract class Command {
     private String name;
     private String[] aliases;
+	public String getUsage;
 
-    protected Command(String name, String... aliases) {
+	public Command(String name, String getUsage, String... aliases) {
         this.name = name;
         this.aliases = aliases;
+        this.getUsage = getUsage;
     }
-
+    
     public abstract void run(String alias, String[] args);
 
     public abstract List<String> autocomplete(int arg, String[] args);
@@ -42,6 +44,10 @@ public abstract class Command {
         l.addAll(Arrays.asList(aliases));
 
         return l;
+    }
+    
+    public String getCmd() {
+    	return this.aliases[0];
     }
 
 }

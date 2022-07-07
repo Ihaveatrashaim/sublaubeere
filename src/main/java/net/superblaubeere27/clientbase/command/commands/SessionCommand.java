@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SessionCommand extends Command {
     public SessionCommand() {
-        super("session");
+        super("session", "Get minecraft session and more" ,"session");
     }
 
     @Override

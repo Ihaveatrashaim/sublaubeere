@@ -18,13 +18,18 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.superblaubeere27.clientbase.ClientBase;
 import net.superblaubeere27.clientbase.events.KeyEvent;
 import net.superblaubeere27.clientbase.events.Render2DEvent;
+import net.superblaubeere27.clientbase.gui.clickgui.ClickGUI;
+import net.superblaubeere27.clientbase.gui.clickgui2.VapeClickGui;
 import net.superblaubeere27.clientbase.modules.Module;
 import net.superblaubeere27.clientbase.modules.ModuleCategory;
 import net.superblaubeere27.clientbase.modules.ModuleManager;
 import net.superblaubeere27.clientbase.notifications.NotificationManager;
 import net.superblaubeere27.clientbase.utils.GLUtil;
 import net.superblaubeere27.clientbase.utils.TimeHelper;
+import net.superblaubeere27.clientbase.valuesystem.ModeValue;
 import net.superblaubeere27.clientbase.valuesystem.NumberValue;
+import net.superblaubeere27.clientbase.valuesystem.Value;
+
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -81,7 +86,7 @@ public class TabGui extends Module {
             		}
     			}else {
     				if(tab <= 0) {
-            			tab = ModuleCategory.values().length - 2;
+            			tab = ModuleCategory.values().length - 1;
             		}else {
             			tab--;
             		}
@@ -89,7 +94,7 @@ public class TabGui extends Module {
         	}
         	if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
         		if(!expanded) {
-    				if(tab >= ModuleCategory.values().length - 2) {
+    				if(tab >= ModuleCategory.values().length - 1) {
             			tab = 0;
             			
             		}else {
@@ -107,10 +112,25 @@ public class TabGui extends Module {
         	if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
         		if(mod.isEmpty()) return;
     			if(expanded) {
-    				if(mod.get(moduleIndex).getState())
-        				mod.get(moduleIndex).setState(false);
-    				else
-        				mod.get(moduleIndex).setState(true);
+    				if(mod.get(moduleIndex).getName().equalsIgnoreCase("ClickGui")) {
+    					for(Value v :ClientBase.INSTANCE.valueManager.getAllValuesFrom("ClickGui")) {
+    		        		if(v instanceof ModeValue) {
+    		            		if(((ModeValue)v).getObject() == 1) {
+    		                        Minecraft.getMinecraft().displayGuiScreen(new VapeClickGui());
+    		            		}
+    		            		
+    		            		if(((ModeValue)v).getObject() == 0) {
+    		                        Minecraft.getMinecraft().displayGuiScreen(new ClickGUI());
+    		            		}
+    		        		}
+    		        	}
+    				}else {
+    					if(mod.get(moduleIndex).getState())
+            				mod.get(moduleIndex).setState(false);
+        				else
+            				mod.get(moduleIndex).setState(true);
+    				}
+    				
     			}else {
         			expanded = true;
     			}
@@ -121,6 +141,8 @@ public class TabGui extends Module {
         	}
         	timer.reset();
     	}
+    	
+    	
     	//----------------------------------------------------------------------
         FontRenderer fr = mc.fontRendererObj;
         int count = 0;
@@ -131,16 +153,21 @@ public class TabGui extends Module {
             Gui.drawRect(70, (int) 30.5, 165, (int) (30 + (mod.size()) * 16 + 1.5), color.getRGB());
         	for(Module m : mod) {
         		fr.drawString(m.getName(), 73, 35 + Modcount * 16, getColorToggle(m.getState()));
+
         		
         		Modcount++;
         	}
         }
         
-        Gui.drawRect(5, (int) 30.5, 70, (int) (30 + (ModuleCategory.values().length - 1) * 16 + 1.5), color.getRGB());
+        
+        Gui.drawRect(5, (int) 30.5, 70, (int) (30 + (ModuleCategory.values().length) * 16 + 1.5), color.getRGB());
         Gui.drawRect(7, 33 + tab * 16, 7 + 61, 33 + tab * 16 + 12, 0xff0090ff);
 
+        if(moduleIndex > mod.size()) {
+        	moduleIndex = 0;
+        }
+        
         for(ModuleCategory c : ModuleCategory.values()) {
-        	if(c == ModuleCategory.DEV) return;
         	fr.drawString(c.name(), 10, 36 + count * 16, -1);
         	
         	count++;

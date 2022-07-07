@@ -22,6 +22,8 @@ public abstract class Value<T> {
      * The validator which is called every time the value is changed
      */
     private Predicate<T> validator;
+	public int optionAnimNow;
+	public int optionAnim;
 
     Value(String name, T defaultVal, Predicate<T> validator) {
         this.name = name;

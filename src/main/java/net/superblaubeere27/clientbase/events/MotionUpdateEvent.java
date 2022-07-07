@@ -15,16 +15,18 @@ import com.darkmagician6.eventapi.types.EventType;
 
 public class MotionUpdateEvent implements Event {
     private final EventType eventType;
-    private double x;
-    private double y;
-    private double z;
+    public double x;
+    public double y;
+    public double z;
 
     private float yaw;
     private float pitch;
 
     private boolean onGround;
+    
+    public int sprintToggleTimer;
 
-    public MotionUpdateEvent(EventType eventType, double x, double y, double z, float yaw, float pitch, boolean onGround) {
+    public MotionUpdateEvent(EventType eventType, double x, double y, double z, float yaw, float pitch, boolean onGround, int sprintToggleTimer) {
         this.eventType = eventType;
         this.x = x;
         this.y = y;
@@ -32,6 +34,7 @@ public class MotionUpdateEvent implements Event {
         this.yaw = yaw;
         this.pitch = pitch;
         this.onGround = onGround;
+        this.sprintToggleTimer = sprintToggleTimer;
     }
 
     public EventType getEventType() {
