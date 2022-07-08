@@ -3,7 +3,7 @@
 
 # How to setup
 
-# JVM-Args: -Dfml.coreMods.load=net.superblaubeere27.clientbase.injection.MixinLoader Please replace net.superblaubeere27.clientbase.injection.MixinLoader with the full class name of MixinLoader (if you moved the class)
+ JVM-Args: -Dfml.coreMods.load=net.superblaubeere27.clientbase.injection.MixinLoader Please replace net.superblaubeere27.clientbase.injection.MixinLoader with the full class name of MixinLoader (if you moved the class)
 
 # IntelliJ IDEA
 Gradle setup command: gradlew -Dorg.gradle.jvmargs=-Xmx5G setupDecompWorkspace idea genIntelliJRuns build
